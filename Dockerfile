@@ -44,7 +44,4 @@ RUN cd /tmp/gdal-2.1.3 && \
 
 RUN pip install GDAL==2.1.3
 
-
-ENTRYPOINT ["/usr/bin/gdalinfo"]
-
-CMD ["--formats"]
+CMD ["python2"]
