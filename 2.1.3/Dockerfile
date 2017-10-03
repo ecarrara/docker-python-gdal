@@ -1,6 +1,9 @@
 FROM ubuntu:16.04
 MAINTAINER Erle Carrara <carrara.erle@gmail.com>
 
+ENV GDAL_VERSION=2.1.3
+ENV GDAL_VERSION_PYTHON=2.1.3
+
 RUN apt-get update && \
     apt-get -y install \
         wget \
@@ -23,10 +26,10 @@ RUN apt-get update && \
         python-numpy-dev
 
 
-RUN wget http://download.osgeo.org/gdal/2.1.3/gdal-2.1.3.tar.gz -O /tmp/gdal-2.1.3.tar.gz && \
-    tar -x -f /tmp/gdal-2.1.3.tar.gz -C /tmp
+RUN wget http://download.osgeo.org/gdal/$GDAL_VERSION/gdal-${GDAL_VERSION}.tar.gz -O /tmp/gdal-${GDAL_VERSION}.tar.gz && \
+    tar -x -f /tmp/gdal-${GDAL_VERSION}.tar.gz -C /tmp
 
-RUN cd /tmp/gdal-2.1.3 && \
+RUN cd /tmp/gdal-${GDAL_VERSION} && \
     ./configure \
         --prefix=/usr \
         --with-python \
@@ -42,6 +45,8 @@ RUN cd /tmp/gdal-2.1.3 && \
         --with-spatialite && \
     make && make install
 
-RUN pip install GDAL==2.1.3
+RUN rm /tmp/gdal-${GDAL_VERSION} -rf
+
+RUN pip install GDAL==${GDAL_VERSION_PYTHON}
 
 CMD ["python2"]
