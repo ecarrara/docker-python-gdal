@@ -15,7 +15,7 @@ RUN apt-get update && \
         libjasper-runtime \
         libjasper-dev \
         libjasper1 \
-        libgeos-c1v5 \
+        libgeos-dev \
         libproj-dev \
         libpoppler-dev \
         libsqlite3-dev \
@@ -34,6 +34,7 @@ RUN cd /tmp/gdal-${GDAL_VERSION} && \
         --prefix=/usr \
         --with-python \
         --with-geos \
+        --with-sfcgal \
         --with-geotiff \
         --with-jpeg \
         --with-png \
@@ -43,10 +44,10 @@ RUN cd /tmp/gdal-${GDAL_VERSION} && \
         --with-pg \
         --with-curl \
         --with-spatialite && \
-    make && make install
+    make -j $(nproc) && make install
 
 RUN rm /tmp/gdal-${GDAL_VERSION} -rf
 
-RUN pip install GDAL==${GDAL_VERSION_PYTHON}
+# RUN pip install GDAL==${GDAL_VERSION_PYTHON}
 
 CMD ["python2"]
