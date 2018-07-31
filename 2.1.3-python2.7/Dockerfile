@@ -34,8 +34,11 @@ RUN cd /tmp/gdal-${GDAL_VERSION} && \
         --prefix=/usr \
         --with-python \
         --with-geos \
-        --with-geotiff \
-        --with-jpeg \
+        --with-sfcgal \
+        --with-libtiff=internal \
+        --with-geotiff=internal \
+        --with-jpeg=internal \
+        --with-jpeg12=internal \
         --with-png \
         --with-expat \
         --with-libkml \
@@ -43,7 +46,7 @@ RUN cd /tmp/gdal-${GDAL_VERSION} && \
         --with-pg \
         --with-curl \
         --with-spatialite && \
-    make && make install
+    make -j $(nproc) && make install
 
 RUN rm /tmp/gdal-${GDAL_VERSION} -rf
 

@@ -35,8 +35,10 @@ RUN cd /tmp/gdal-${GDAL_VERSION} && \
         --with-python \
         --with-geos \
         --with-sfcgal \
-        --with-geotiff \
-        --with-jpeg \
+        --with-libtiff=internal \
+        --with-geotiff=internal \
+        --with-jpeg=internal \
+        --with-jpeg12=internal \
         --with-png \
         --with-expat \
         --with-libkml \
